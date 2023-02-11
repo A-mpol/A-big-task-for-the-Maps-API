@@ -22,9 +22,19 @@ def object_search(name_object):
         return json_response
 
 
+def get_toponym(name_object):
+    data = object_search(name_object)
+    return data["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]
+
+
 def object_coordinates(name_object):
-    toponym = object_search(name_object)["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]
+    toponym = get_toponym(name_object)
     return toponym["Point"]["pos"]
+
+
+def full_address_object(name_object):
+    toponym = get_toponym(name_object)
+    return toponym['metaDataProperty']['GeocoderMetaData']['text']
 
 
 def moving(size):
