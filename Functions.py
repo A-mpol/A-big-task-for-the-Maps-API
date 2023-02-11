@@ -37,6 +37,11 @@ def full_address_object(name_object):
     return toponym['metaDataProperty']['GeocoderMetaData']['text']
 
 
+def object_postal_code(name_object):
+    toponym_country = get_toponym(name_object)["metaDataProperty"]["GeocoderMetaData"]["AddressDetails"]["Country"]
+    return toponym_country["AdministrativeArea"]["Locality"]["Thoroughfare"]["Premise"]["PostalCode"]["PostalCodeNumber"]
+
+
 def moving(size):
     if 10 < size < 13:
         return size / (((size % 10) + size % 10) * 100)
