@@ -7,8 +7,8 @@ coordinates = input()
 size = input()
 
 
-def geocode(coordinates, size):
-    map_request = 'http://static-maps.yandex.ru/1.x/?ll=' + coordinates + "&z=" + size + "&l=map"
+def geocode(coordinates, size, type_map):
+    map_request = 'http://static-maps.yandex.ru/1.x/?ll=' + coordinates + "&z=" + size + "&l=" + type_map
     response = requests.get(map_request)
     return response.content
 
