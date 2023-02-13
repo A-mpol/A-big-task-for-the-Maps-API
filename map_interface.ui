@@ -35,7 +35,7 @@
       </property>
      </spacer>
     </item>
-    <item row="10" column="0">
+    <item row="11" column="0">
      <widget class="QLabel" name="mistake_label">
       <property name="enabled">
        <bool>true</bool>
@@ -51,7 +51,7 @@
       </property>
      </widget>
     </item>
-    <item row="9" column="0" colspan="3">
+    <item row="10" column="0" colspan="3">
      <widget class="QLabel" name="image_label">
       <property name="text">
        <string/>
@@ -80,6 +80,13 @@
     </item>
     <item row="2" column="1">
      <widget class="QLineEdit" name="object_edit"/>
+    </item>
+    <item row="5" column="1">
+     <widget class="QPushButton" name="reset_button">
+      <property name="text">
+       <string>Search reset</string>
+      </property>
+     </widget>
     </item>
     <item row="4" column="1">
      <widget class="QPushButton" name="search_button">
@@ -116,10 +123,13 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="1">
-     <widget class="QPushButton" name="reset_button">
+    <item row="9" column="1">
+     <widget class="QLineEdit" name="address_edit"/>
+    </item>
+    <item row="9" column="0">
+     <widget class="QLabel" name="address_label">
       <property name="text">
-       <string>Search reset</string>
+       <string>Address:</string>
       </property>
      </widget>
     </item>
