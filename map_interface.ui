@@ -15,26 +15,6 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="coords_edit"/>
-    </item>
-    <item row="2" column="1">
-     <widget class="QPushButton" name="show_button">
-      <property name="text">
-       <string>Show</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="size_edit"/>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="size_label">
-      <property name="text">
-       <string>Size:</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="0">
      <widget class="QLabel" name="coords_label">
       <property name="text">
@@ -55,14 +35,7 @@
       </property>
      </spacer>
     </item>
-    <item row="3" column="0" colspan="3">
-     <widget class="QLabel" name="image_label">
-      <property name="text">
-       <string>TextLabel</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
+    <item row="7" column="0">
      <widget class="QLabel" name="mistake_label">
       <property name="enabled">
        <bool>true</bool>
@@ -74,7 +47,55 @@
        </size>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0" colspan="3">
+     <widget class="QLabel" name="image_label">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QPushButton" name="show_button">
+      <property name="text">
+       <string>Show</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="size_edit"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="size_label">
+      <property name="text">
+       <string>Size:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="coords_edit"/>
+    </item>
+    <item row="4" column="1">
+     <widget class="QRadioButton" name="sat_radiobutton">
+      <property name="text">
+       <string>Satellite</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QRadioButton" name="map_radiobutton">
+      <property name="text">
+       <string>Scheme</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QRadioButton" name="sat_skl_radiobutton">
+      <property name="text">
+       <string>Hybrid</string>
       </property>
      </widget>
     </item>
