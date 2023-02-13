@@ -65,7 +65,7 @@ class Map(QMainWindow, Ui_MainWindow):
         if os.access(self.map_file, os.F_OK):
             os.remove(self.map_file)
 
-    def keyPressEvent(self, event):
+    def keyReleaseEvent(self, event):
         if event.key() == Qt.Key_PageUp:
             if self.size < 19:
                 self.size += 1
