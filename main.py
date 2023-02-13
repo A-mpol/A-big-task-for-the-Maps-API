@@ -21,13 +21,28 @@ class Map(QMainWindow, Ui_MainWindow):
         self.map_file = "map.png"
         self.coordinates = [0, 0]
         self.size = 1
+        self.map = "map"
 
         self.show_button.clicked.connect(self.set_image)
+
+        self.map_radiobutton.setChecked(True)
+        self.map_radiobutton.clicked.connect(self.change_type_of_map)
+        self.sat_radiobutton.clicked.connect(self.change_type_of_map)
+        self.sat_skl_radiobutton.clicked.connect(self.change_type_of_map)
+
+    def change_type_of_map(self):
+        if self.map_radiobutton.isChecked():
+            self.map = "map"
+        elif self.sat_radiobutton.isChecked():
+            self.map = "sat"
+        elif self.sat_skl_radiobutton.isChecked():
+            self.map = "sat,skl"
+        self.set_image()
 
     def geocode(self):
         coordinates = str(self.coordinates[0]) + "," + str(self.coordinates[1])
         size = str(self.size)
-        map_request = 'http://static-maps.yandex.ru/1.x/?ll=' + coordinates + "&z=" + size + "&l=map"
+        map_request = 'http://static-maps.yandex.ru/1.x/?ll=' + coordinates + "&z=" + size + "&l=" + self.map
         response = requests.get(map_request)
         return response.content
 
