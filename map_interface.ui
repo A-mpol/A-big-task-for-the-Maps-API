@@ -17,6 +17,9 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="11" column="0" colspan="3">
      <widget class="QLabel" name="image_label">
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -54,6 +57,9 @@
       <property name="text">
        <string>Hybrid</string>
       </property>
+      <property name="autoExclusive">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item row="6" column="1">
@@ -61,12 +67,18 @@
       <property name="text">
        <string>Scheme</string>
       </property>
+      <property name="autoExclusive">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item row="7" column="1">
      <widget class="QRadioButton" name="sat_radiobutton">
       <property name="text">
        <string>Satellite</string>
+      </property>
+      <property name="autoExclusive">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -135,8 +147,20 @@
     </item>
     <item row="10" column="1">
      <widget class="QRadioButton" name="postal_radiobutton">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="statusTip">
+       <string/>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
       <property name="text">
        <string>Postal code</string>
+      </property>
+      <property name="autoExclusive">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
