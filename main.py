@@ -21,9 +21,10 @@ class Map(QMainWindow, Ui_MainWindow):
         self.map_file = "map.png"
         self.coordinates = [0, 0]
         self.size = 1
-        self.map = "map"
+        self.map_type = "map"
 
         self.show_button.clicked.connect(self.set_image)
+        self.search_button.clicked.connect(self.set_image)
 
         self.map_radiobutton.setChecked(True)
         self.map_radiobutton.clicked.connect(self.change_type_of_map)
@@ -32,27 +33,32 @@ class Map(QMainWindow, Ui_MainWindow):
 
     def change_type_of_map(self):
         if self.map_radiobutton.isChecked():
-            self.map = "map"
+            self.map_type = "map"
         elif self.sat_radiobutton.isChecked():
-            self.map = "sat"
+            self.map_type = "sat"
         elif self.sat_skl_radiobutton.isChecked():
-            self.map = "sat,skl"
+            self.map_type = "sat,skl"
+        self.set_image()
         self.set_image()
 
     def geocode(self):
         coordinates = str(self.coordinates[0]) + "," + str(self.coordinates[1])
         size = str(self.size)
-        map_request = 'http://static-maps.yandex.ru/1.x/?ll=' + coordinates + "&z=" + size + "&l=" + self.map
+        map_request = 'http://static-maps.yandex.ru/1.x/?ll=' + coordinates + "&z=" + size + "&l=" + self.map_type
         response = requests.get(map_request)
         return response.content
 
     def set_image(self):
-        if self.check_parameters():
-            with open(self.map_file, "wb") as file:
-                file.write(self.geocode())
+        if self.sender().text() == "Show" and not self.check_parameters():
+            return
+        elif self.sender().text() == "Search" and not self.check_parameters():
+            return
 
-            self.pixmap = QPixmap(self.map_file)
-            self.image_label.setPixmap(self.pixmap)
+        with open(self.map_file, "wb") as file:
+            file.write(self.geocode())
+
+        self.pixmap = QPixmap(self.map_file)
+        self.image_label.setPixmap(self.pixmap)
 
     def check_parameters(self):
         self.mistake_label.setText("")
