@@ -3,12 +3,13 @@ import requests
 API_KEY = '40d1649f-0493-4b70-98ba-98533de7710b'
 
 
-def geocode(coordinates, size, type_map):
+def geocode(coordinates, size, type_map, pt=False):
     coordinates = ','.join(str(h) for h in coordinates)
     map_request = 'http://static-maps.yandex.ru/1.x/?ll=' + coordinates + \
                   "&z=" + str(size) + \
-                  "&l=" + type_map + \
-                  "&pt=" + coordinates
+                  "&l=" + type_map
+    if pt:
+        map_request += "&pt=" + coordinates
     response = requests.get(map_request)
     return response.content
 

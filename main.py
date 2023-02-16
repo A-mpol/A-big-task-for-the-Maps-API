@@ -23,9 +23,10 @@ class Map(QMainWindow, Ui_MainWindow):
         self.coordinates = [0, 0]
         self.size = 1
         self.map_type = "map"
+        self.point_needed = False
 
-        self.show_button.clicked.connect(self.set_image)
-        self.search_button.clicked.connect(self.set_image)
+        self.show_button.clicked.connect(self.make_request)
+        self.search_button.clicked.connect(self.make_request)
 
         self.map_radiobutton.setChecked(True)
         self.map_radiobutton.clicked.connect(self.change_type_of_map)
@@ -39,19 +40,28 @@ class Map(QMainWindow, Ui_MainWindow):
             self.map_type = "sat"
         elif self.sat_skl_radiobutton.isChecked():
             self.map_type = "sat,skl"
-        self.set_image()
-        self.set_image()
+        self.set_image(self.geocode())
 
-    def set_image(self):
-        if self.sender() is None:
-            pass
-        elif self.sender().text() == "Show" and not self.set_show_parameters():
-            return
-        elif self.sender().text() == "Search" and not self.set_search_parameters():
-            return
+    def make_request(self):
+        if self.sender().text() == "Show" and self.set_show_parameters():
+            self.point_needed = False
+            self.set_image(self.geocode())
+        elif self.sender().text() == "Search" and self.set_search_parameters():
+            self.point_needed = True
+            self.set_image(self.geocode())
 
+    def geocode(self):
+        coordinates = str(self.coordinates[0]) + "," + str(self.coordinates[1])
+        size = str(self.size)
+        map_request = 'http://static-maps.yandex.ru/1.x/?ll=' + coordinates + "&z=" + size + "&l=" + self.map_type
+        if self.point_needed:
+            map_request += "&pt=" + coordinates
+        response = requests.get(map_request)
+        return response.content
+
+    def set_image(self, data):
         with open(self.map_file, "wb") as file:
-            file.write(geocode(self.coordinates, self.size, self.map_type))
+            file.write(data)
 
         self.pixmap = QPixmap(self.map_file)
         self.image_label.setPixmap(self.pixmap)
@@ -101,32 +111,32 @@ class Map(QMainWindow, Ui_MainWindow):
             if self.size < 19:
                 self.size += 1
                 self.size_edit.setText(str(self.size))
-                self.set_image()
+                self.set_image(self.geocode())
         if event.key() == Qt.Key_PageDown:
             if self.size > 1:
                 self.size -= 1
                 self.size_edit.setText(str(self.size))
-                self.set_image()
+                self.set_image(self.geocode())
         if event.key() == Qt.Key_Up:
             if self.coordinates[1] < 89:
                 self.coordinates[1] += self.moving()
                 self.coords_edit.setText(str(self.coordinates[0]) + ", " + str(self.coordinates[1]))
-                self.set_image()
+                self.set_image(self.geocode())
         if event.key() == Qt.Key_Down:
             if self.coordinates[1] > -89:
                 self.coordinates[1] -= self.moving()
                 self.coords_edit.setText(str(self.coordinates[0]) + ", " + str(self.coordinates[1]))
-                self.set_image()
+                self.set_image(self.geocode())
         if event.key() == Qt.Key_Left:
             if self.coordinates[0] > -179:
                 self.coordinates[0] -= self.moving()
                 self.coords_edit.setText(str(self.coordinates[0]) + ", " + str(self.coordinates[1]))
-                self.set_image()
+                self.set_image(self.geocode())
         if event.key() == Qt.Key_Right:
             if self.coordinates[0] < 179:
                 self.coordinates[0] += self.moving()
                 self.coords_edit.setText(str(self.coordinates[0]) + ", " + str(self.coordinates[1]))
-                self.set_image()
+                self.set_image(self.geocode())
 
 
 def except_hook(cls, exception, traceback):
