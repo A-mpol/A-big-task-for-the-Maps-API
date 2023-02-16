@@ -1,11 +1,12 @@
 import os
 import sys
 
-import requests
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from map_interface import Ui_MainWindow
 from PyQt5.QtWidgets import QApplication, QMainWindow
+
+from functions import *
 
 
 class ResponseError(Exception):
@@ -41,32 +42,39 @@ class Map(QMainWindow, Ui_MainWindow):
         self.set_image()
         self.set_image()
 
-    def geocode(self):
-        coordinates = str(self.coordinates[0]) + "," + str(self.coordinates[1])
-        size = str(self.size)
-        map_request = 'http://static-maps.yandex.ru/1.x/?ll=' + coordinates + "&z=" + size + "&l=" + self.map_type
-        response = requests.get(map_request)
-        return response.content
-
     def set_image(self):
-        if self.sender().text() == "Show" and not self.check_parameters():
+        if self.sender().text() == "Show" and not self.set_show_parameters():
             return
-        elif self.sender().text() == "Search" and not self.check_parameters():
+        elif self.sender().text() == "Search" and not self.set_search_parameters():
             return
 
         with open(self.map_file, "wb") as file:
-            file.write(self.geocode())
+            file.write(geocode(self.coordinates, self.size, self.map_type))
 
         self.pixmap = QPixmap(self.map_file)
         self.image_label.setPixmap(self.pixmap)
 
-    def check_parameters(self):
+    def set_show_parameters(self):
         self.mistake_label.setText("")
         try:
             self.coordinates = self.coords_edit.text().replace(" ", "").split(",")
             self.coordinates = [float(self.coordinates[0]), float(self.coordinates[1])]
             self.size = int(self.size_edit.text())
-            if not self.geocode():
+            if not geocode(self.coordinates, self.size, self.map_type):
+                raise ResponseError
+            return True
+        except Exception:
+            self.mistake_label.setText("Некорректные данные!")
+            return False
+
+    def set_search_parameters(self):
+        self.mistake_label.setText("")
+        try:
+            address = self.address_edit.text()
+            self.coordinates = object_coordinates(address)
+            print(self.coordinates)
+            self.size = int(self.size_edit.text())
+            if not geocode(self.coordinates, self.size, self.map_type):
                 raise ResponseError
             return True
         except Exception:
