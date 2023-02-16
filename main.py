@@ -43,7 +43,9 @@ class Map(QMainWindow, Ui_MainWindow):
         self.set_image()
 
     def set_image(self):
-        if self.sender().text() == "Show" and not self.set_show_parameters():
+        if self.sender() is None:
+            pass
+        elif self.sender().text() == "Show" and not self.set_show_parameters():
             return
         elif self.sender().text() == "Search" and not self.set_search_parameters():
             return
