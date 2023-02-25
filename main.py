@@ -54,6 +54,7 @@ class Map(QMainWindow, Ui_MainWindow):
 
     def reset_search(self):
         self.point_cords = None
+        self.address_edit.setText("")
         self.set_image(self.geocode())
 
     def geocode(self):
