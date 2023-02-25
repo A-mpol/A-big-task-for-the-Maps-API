@@ -89,8 +89,9 @@ class Map(QMainWindow, Ui_MainWindow):
         self.mistake_label.setText("")
         try:
             address = self.object_edit.text()
+            full_address = full_address_object(address)
+            self.address_edit.setText(full_address)
             self.coordinates = object_coordinates(address)
-            print(self.coordinates)
             self.size = int(self.size_edit.text())
             if not geocode(self.coordinates, self.size, self.map_type):
                 raise ResponseError
