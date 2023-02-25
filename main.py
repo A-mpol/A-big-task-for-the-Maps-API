@@ -24,7 +24,7 @@ class Map(QMainWindow, Ui_MainWindow):
         self.coordinates = [0, 0]
         self.size = 1
         self.map_type = "map"
-        self.point_needed = False
+        self.point_cords = None
 
         self.show_button.clicked.connect(self.make_request)
         self.search_button.clicked.connect(self.make_request)
@@ -45,18 +45,18 @@ class Map(QMainWindow, Ui_MainWindow):
 
     def make_request(self):
         if self.sender().text() == "Show" and self.set_show_parameters():
-            self.point_needed = False
+            self.point_cords = None
             self.set_image(self.geocode())
         elif self.sender().text() == "Search" and self.set_search_parameters():
-            self.point_needed = True
+            self.point_cords = self.coordinates
             self.set_image(self.geocode())
 
     def geocode(self):
         coordinates = str(self.coordinates[0]) + "," + str(self.coordinates[1])
         size = str(self.size)
         map_request = 'http://static-maps.yandex.ru/1.x/?ll=' + coordinates + "&z=" + size + "&l=" + self.map_type
-        if self.point_needed:
-            map_request += "&pt=" + coordinates
+        if self.point_cords is not None:
+            map_request += "&pt=" + ','.join([str(num) for num in self.point_cords])
         response = requests.get(map_request)
         return response.content
 
