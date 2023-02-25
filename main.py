@@ -88,7 +88,7 @@ class Map(QMainWindow, Ui_MainWindow):
     def set_search_parameters(self):
         self.mistake_label.setText("")
         try:
-            address = self.address_edit.text()
+            address = self.object_edit.text()
             self.coordinates = object_coordinates(address)
             print(self.coordinates)
             self.size = int(self.size_edit.text())
