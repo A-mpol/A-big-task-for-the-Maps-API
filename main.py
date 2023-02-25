@@ -28,6 +28,7 @@ class Map(QMainWindow, Ui_MainWindow):
 
         self.show_button.clicked.connect(self.make_request)
         self.search_button.clicked.connect(self.make_request)
+        self.reset_button.clicked.connect(self.reset_search)
 
         self.map_radiobutton.setChecked(True)
         self.map_radiobutton.clicked.connect(self.change_type_of_map)
@@ -50,6 +51,10 @@ class Map(QMainWindow, Ui_MainWindow):
         elif self.sender().text() == "Search" and self.set_search_parameters():
             self.point_cords = self.coordinates.copy()
             self.set_image(self.geocode())
+
+    def reset_search(self):
+        self.point_cords = None
+        self.set_image(self.geocode())
 
     def geocode(self):
         coordinates = str(self.coordinates[0]) + "," + str(self.coordinates[1])
