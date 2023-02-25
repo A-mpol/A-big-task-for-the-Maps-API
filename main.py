@@ -48,7 +48,7 @@ class Map(QMainWindow, Ui_MainWindow):
             self.point_cords = None
             self.set_image(self.geocode())
         elif self.sender().text() == "Search" and self.set_search_parameters():
-            self.point_cords = self.coordinates
+            self.point_cords = self.coordinates.copy()
             self.set_image(self.geocode())
 
     def geocode(self):
